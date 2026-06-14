@@ -7,6 +7,7 @@ import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.chat.response.ChatResponse;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,7 +15,8 @@ import org.springframework.stereotype.Service;
 public class SimpleChatService {
 
     @Resource
-    private ChatModel deepseekChatModel;
+    @Qualifier("kimiApi")
+    private ChatModel chatModel;
 
 //    private static final String SYSTEM_MESSAGE = """
 //            你是一位专注于Java编程方向的资深技术专家与智能助手。你的核心使命是帮助开发者解决Java及生态相关的问题，提供准确、高效、符合最佳实践的代码建议、问题排查、架构设计指导和性能优化方案。
@@ -61,14 +63,14 @@ public class SimpleChatService {
     public String chat(String message) {
         SystemMessage systemMessage = SystemMessage.from(String.valueOf(ClassLoader.getSystemResource("system-prompt.txt")));
         UserMessage userMessage = UserMessage.from(message);
-        ChatResponse chatResponse = deepseekChatModel.chat(systemMessage, userMessage);
+        ChatResponse chatResponse = chatModel.chat(systemMessage, userMessage);
         AiMessage aiMessage = chatResponse.aiMessage();
         log.info("AI 输出：" + aiMessage.text());
         return aiMessage.text();
     }
 
     public String chatWithMessage(UserMessage userMessage) {
-        ChatResponse chatResponse = deepseekChatModel.chat(userMessage);
+        ChatResponse chatResponse = chatModel.chat(userMessage);
         AiMessage aiMessage = chatResponse.aiMessage();
         log.info("AI 输出：" + aiMessage.text());
         return aiMessage.text();

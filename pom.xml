@@ -19,6 +19,8 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <langchain.version>1.16.2</langchain.version>
+        <langchainSpringSpring.version>1.16.2-beta26</langchainSpringSpring.version>
     </properties>
 
     <dependencies>
@@ -29,7 +31,17 @@
         <dependency>
             <groupId>dev.langchain4j</groupId>
             <artifactId>langchain4j-open-ai</artifactId>
-            <version>1.16.2</version>
+            <version>${langchain.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j</artifactId>
+            <version>${langchain.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>dev.langchain4j</groupId>
+            <artifactId>langchain4j-spring-boot-starter</artifactId>
+            <version>${langchainSpringSpring.version}</version>
         </dependency>
 <!--        <dependency>-->
 <!--            <groupId>dev.langchain4j</groupId>-->

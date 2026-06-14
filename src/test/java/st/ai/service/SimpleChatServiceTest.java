@@ -7,7 +7,8 @@ import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.net.URL;
+import java.util.Base64;
 
 @SpringBootTest
 class SimpleChatServiceTest {
@@ -20,18 +21,23 @@ class SimpleChatServiceTest {
      */
     @Test
     void testChat(){
-        service.chat("你好，我是程序员st，我想了解下java中的各种锁和锁升级机制");
+        service.chat("你好，我是程序员st，我想了解下java中常用的数据类型");
     }
 
 
     /**
      * 多模态调用(需模型支持)
+     * Kimi API 不支持外部图片 URL，需将图片转为 Base64 编码
      */
     @Test
-    void chatWithMessage() {
+    void chatWithMessage() throws Exception {
+        // 下载图片并转为 Base64（Kimi 多模态 API 只接受 base64 格式）
+        byte[] imageBytes = new URL("https://cdn.deepseek.com/logo.png").openStream().readAllBytes();
+        String base64 = Base64.getEncoder().encodeToString(imageBytes);
+
         UserMessage userMessage = UserMessage.from(
                 TextContent.from("描述图片"),
-                ImageContent.from("https://cdn.deepseek.com/logo.png?x-image-process=image%2Fresize%2Cw_1920")
+                ImageContent.from(base64, "image/png")
         );
         service.chatWithMessage(userMessage);
     }

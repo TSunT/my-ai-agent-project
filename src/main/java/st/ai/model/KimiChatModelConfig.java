@@ -14,8 +14,8 @@ import java.util.List;
 
 @Setter
 @Configuration
-@ConfigurationProperties(prefix = "deepseek.chat-model")
-public class DeepSeekChatModelConfig {
+@ConfigurationProperties(prefix = "kimi.chat-model")
+public class KimiChatModelConfig {
     private String modelName;
 
     private String apiKey;
@@ -25,8 +25,7 @@ public class DeepSeekChatModelConfig {
     @Resource
     private ChatModelListener chatModelListener;
 
-    @Primary
-    @Bean(name = "deepseekApi")
+    @Bean(name = "kimiApi")
     public ChatModel myDeepSeekChatModel() {
         return OpenAiChatModel.builder()
                 .baseUrl(baseUrl)
