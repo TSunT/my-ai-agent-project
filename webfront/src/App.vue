@@ -132,9 +132,9 @@ const shortChatId = computed(() => {
               :content="msg.content"
               class="bubble-content"
             />
-            <!-- Blinking cursor shown only while this message is streaming -->
+            <!-- Blinking cursor shown only while streaming AND content has arrived -->
             <span
-              v-if="msg.role === 'assistant' && idx === streamingIndex"
+              v-if="msg.role === 'assistant' && idx === streamingIndex && msg.content !== ''"
               class="typing-cursor"
             />
             <div v-else-if="msg.role !== 'assistant'" class="bubble-content">{{ msg.content }}</div>
